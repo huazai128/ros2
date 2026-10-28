@@ -10,6 +10,16 @@ Gazebo 物理仿真，不能据此验证 SLAM 或导航效果。
 ros2 launch car_bringup sensor_sim.launch.py
 ```
 
+在 Ubuntu 24.04 的 ROS 2 Jazzy 环境，安装 `ros-jazzy-ros-gz` 后可启动真正的
+Gazebo Harmonic 3D 仿真（小车、墙体、差速运动、雷达与相机）：
+
+```bash
+ros2 launch car_bringup gazebo_sim.launch.py
+```
+
+该入口使用仿真时间，并桥接 `/cmd_vel`、`/odom`、`/scan`、`/camera/image_raw`
+和 `/tf`。仿真不应被当作实体硬件的验收证据。
+
 完整的上车顺序、Mac SSH 操作、每一步的验收标准与常用排错命令见：[运行手册](docs/RUNBOOK.md)。
 
 ## 快速开始

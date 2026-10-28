@@ -91,6 +91,24 @@ ros2 run car_bringup health_check --stage imu
 
 ## 9. 雷达或摄像头
 
+### Gazebo 3D 仿真（无实体设备）
+
+ROS 2 Jazzy 环境需先安装 `ros-jazzy-ros-gz`，然后启动：
+
+```bash
+ros2 launch car_bringup gazebo_sim.launch.py
+```
+
+它会打开 Gazebo 窗口，加载带墙体的场景和差速小车，并桥接 `/scan`、
+`/camera/image_raw`、`/odom`、`/tf` 与 `/cmd_vel`。这是仿真验收，不是实体车验收。
+在另一终端用下列命令验证传感器；看到稳定频率才算本阶段仿真接口通过：
+
+```bash
+ros2 topic hz /scan
+ros2 topic hz /camera/image_raw
+ros2 run car_bringup health_check --stage sensors
+```
+
 没有实体设备、只需先验收 ROS 接口时，可在 Ubuntu 上启动合成传感器：
 
 ```bash

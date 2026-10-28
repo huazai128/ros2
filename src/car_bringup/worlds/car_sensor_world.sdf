@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<sdf version="1.10">
+  <world name="car_sensor_world">
+    <gravity>0 0 -9.8</gravity>
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <pose>0 0 10 0 0 0</pose><cast_shadows>true</cast_shadows>
+      <diffuse>0.8 0.8 0.8 1</diffuse><specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name="ground"><static>true</static><link name="link">
+      <collision name="collision"><geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry></collision>
+      <visual name="visual"><geometry><plane><normal>0 0 1</normal><size>20 20</size></plane></geometry>
+        <material><ambient>0.25 0.25 0.25 1</ambient><diffuse>0.45 0.45 0.45 1</diffuse></material></visual>
+    </link></model>
+    <model name="north_wall"><static>true</static><pose>3 0 0.75 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>0.15 6 1.5</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.15 6 1.5</size></box></geometry><material><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+    </link></model>
+    <model name="east_wall"><static>true</static><pose>0 3 0.75 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>6 0.15 1.5</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>6 0.15 1.5</size></box></geometry><material><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+    </link></model>
+
+    <model name="ros2_car">
+      <pose>0 0 0.12 0 0 0</pose>
+      <link name="base_link">
+        <inertial><mass>3.0</mass><inertia><ixx>0.06</ixx><iyy>0.10</iyy><izz>0.12</izz></inertia></inertial>
+        <collision name="collision"><geometry><box><size>0.42 0.32 0.14</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.42 0.32 0.14</size></box></geometry><material><diffuse>0.1 0.3 0.8 1</diffuse></material></visual>
+      </link>
+      <link name="left_wheel"><pose>0 0.20 -0.05 1.5708 0 0</pose>
+        <inertial><mass>0.2</mass><inertia><ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz></inertia></inertial>
+        <collision name="collision"><geometry><cylinder><radius>0.08</radius><length>0.05</length></cylinder></geometry></collision>
+        <visual name="visual"><geometry><cylinder><radius>0.08</radius><length>0.05</length></cylinder></geometry><material><diffuse>0.05 0.05 0.05 1</diffuse></material></visual>
+      </link>
+      <link name="right_wheel"><pose>0 -0.20 -0.05 1.5708 0 0</pose>
+        <inertial><mass>0.2</mass><inertia><ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz></inertia></inertial>
+        <collision name="collision"><geometry><cylinder><radius>0.08</radius><length>0.05</length></cylinder></geometry></collision>
+        <visual name="visual"><geometry><cylinder><radius>0.08</radius><length>0.05</length></cylinder></geometry><material><diffuse>0.05 0.05 0.05 1</diffuse></material></visual>
+      </link>
+      <joint name="left_wheel_joint" type="revolute"><parent>base_link</parent><child>left_wheel</child><axis><xyz>0 1 0</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit></axis></joint>
+      <joint name="right_wheel_joint" type="revolute"><parent>base_link</parent><child>right_wheel</child><axis><xyz>0 1 0</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit></axis></joint>
+      <link name="laser"><pose>0.16 0 0.12 0 0 0</pose>
+        <sensor name="lidar" type="lidar"><always_on>true</always_on><update_rate>10</update_rate><topic>/scan</topic><frame_id>laser</frame_id>
+          <lidar><scan><horizontal><samples>360</samples><resolution>1</resolution><min_angle>-3.14159</min_angle><max_angle>3.14159</max_angle></horizontal></scan><range><min>0.12</min><max>8</max><resolution>0.01</resolution></range></lidar>
+        </sensor>
+      </link>
+      <link name="camera_link"><pose>0.22 0 0.10 0 0 0</pose>
+        <sensor name="camera" type="camera"><always_on>true</always_on><update_rate>15</update_rate><topic>/camera/image_raw</topic><frame_id>camera_link</frame_id>
+          <camera><horizontal_fov>1.047</horizontal_fov><image><width>640</width><height>480</height><format>R8G8B8</format></image><clip><near>0.1</near><far>20</far></clip></camera>
+        </sensor>
+      </link>
+      <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+        <left_joint>left_wheel_joint</left_joint><right_joint>right_wheel_joint</right_joint>
+        <wheel_separation>0.40</wheel_separation><wheel_radius>0.08</wheel_radius>
+        <topic>/cmd_vel</topic><odom_topic>/odom</odom_topic><tf_topic>/tf</tf_topic>
+        <frame_id>odom</frame_id><child_frame_id>base_link</child_frame_id>
+      </plugin>
+    </model>
+  </world>
+</sdf>
