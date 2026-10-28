@@ -42,3 +42,16 @@ ros2 run car_bringup health_check --stage tf
 ```
 
 > 安全提示：首次通电请将车轮架空；遥控/急停必须可用；遥控速度配置为低速后才允许落地测试。
+
+## 视觉扫描与目标跟踪（三节点）
+
+完整 Python 工程、YOLOv8、云台扫描、ESP32/L298N 固件、Linux PWM 后端、接线与依赖见
+[视觉小车手册](docs/vision_car/README.md)。无设备可以直接运行合成目标与模拟驱动：
+
+```bash
+colcon build --symlink-install --packages-select car_bringup vision_car
+source install/setup.bash
+ros2 launch vision_car vision_car.launch.py
+```
+
+该模拟可验证控制状态与故障停车，不是物理仿真或真实 YOLO 检测准确率验收。实体驱动默认锁止。

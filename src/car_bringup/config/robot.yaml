@@ -16,3 +16,60 @@ limits:
   # Start with these conservative limits; tune only after wheel tests pass.
   max_linear_x: 0.15
   max_angular_z: 0.50
+
+# 视觉跟踪唯一配置入口。角度正方向为左；真实驱动的方向需架空校准。
+vision:
+  topics:
+    bbox: /vision/bbox
+    annotated: /vision/annotated
+    # 隔离的观测话题，不自动接入现有底盘 /cmd_vel。
+    command: /vision/cmd_vel
+    state: /vision/state
+  camera:
+    device: /dev/video0  # 实机换成 /dev/v4l/by-id/<真实USB摄像头>
+    width: 640
+    height: 480
+    fps: 10.0
+    capture_timeout: 2.0
+  detector:
+    model: ''  # 真实模式必须设置已下载的 yolov8n.pt 绝对路径
+    device: cpu
+    imgsz: 320
+    confidence: 0.5
+    target_class: person  # 空字符串表示所有类别；mock 模式固定 sim_target
+    inference_timeout: 2.0
+    startup_timeout: 60.0
+    image_timeout: 1.0
+  control:
+    scan_min: -60.0
+    scan_max: 60.0
+    scan_speed: 25.0  # deg/s
+    center_threshold: 0.12  # 水平偏移 / 半幅宽
+    forward_speed: 0.10  # m/s，不得超过 limits
+    turn_speed: 0.35  # rad/s，不得超过 limits
+    horizontal_fov: 62.0  # 实测视场角；针孔近似
+    align_degrees: 5.0
+    stop_area: 0.30  # 框面积/图像面积，仅是视觉停止启发式，不是测距防撞
+    stale_timeout: 0.7
+    target_lost_timeout: 0.5
+    pan_center_tolerance: 2.0
+    control_hz: 20.0
+    serial_port: ''  # /dev/serial/by-id/<实际ESP32>
+    baudrate: 115200
+    ack_timeout: 0.4
+    wheel_track: 0.18  # m，需测量；串口模式还须同步修改固件
+    wheel_max_speed: 0.30  # m/s，需标定
+    left_sign: 1
+    right_sign: 1
+    servo_sign: 1
+    servo_center_us: 1500.0
+    servo_us_per_degree: 10.0
+    servo_min_us: 600.0
+    servo_max_us: 2400.0
+    # 以下仅用于 Linux 直连：不得猜测香橙派型号和管脚。
+    gpio_chip: /dev/gpiochip0
+    direction_lines: [-1, -1, -1, -1]  # IN1 IN2 IN3 IN4 的 gpio line offset
+    left_pwm: ''  # 已导出通道，如 /sys/class/pwm/pwmchip<N>/pwm<M>
+    right_pwm: ''
+    servo_pwm: ''
+    external_watchdog_confirmed: false

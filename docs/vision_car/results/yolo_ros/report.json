@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "checks": {
+    "real_yolo_boxes": true,
+    "annotated_image": true,
+    "control_consumed_real_detection": true,
+    "mock_driver_only": true
+  },
+  "ros_distro": "jazzy",
+  "packets": 18,
+  "labels": [
+    "person"
+  ],
+  "states": [
+    "ACQUIRE",
+    "ALIGN",
+    "FAULT"
+  ],
+  "hardware_used": false
+}

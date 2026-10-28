@@ -1,0 +1,25 @@
+{
+  "backend": "ROS 2 jazzy",
+  "detector": "mock green rectangle; NOT YOLO accuracy validation",
+  "checks": {
+    "all_tracking_states": true,
+    "stationary_when_not_tracking": true,
+    "speed_limits": true,
+    "three_nodes": true,
+    "camera_disconnect_stop": true,
+    "detector_disconnect_stop": true,
+    "inference_timeout_reported": true,
+    "inference_timeout_stop": true
+  },
+  "states": [
+    "ACQUIRE",
+    "ALIGN",
+    "APPROACH",
+    "FAULT",
+    "HOLD",
+    "LOST",
+    "SCAN"
+  ],
+  "samples": 668,
+  "passed": true
+}

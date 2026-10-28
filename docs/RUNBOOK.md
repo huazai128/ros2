@@ -171,3 +171,11 @@ ros2 run car_bringup health_check --stage nav
 ## 验收记录
 
 每步记录命令、终端输出、设备 ID、topic 频率与问题。下一步的前提是上一步通过；不要同时修改多个驱动参数，否则无法定位故障。
+
+## 视觉扫描与跟踪扩展
+
+新增 `vision_car` 三节点工程，完整依赖、编译、无设备测试、接口/接线/固件和参数见
+[视觉小车手册](vision_car/README.md)。配置仍统一在 `src/car_bringup/config/robot.yaml`。
+默认 `ros2 launch vision_car vision_car.launch.py` 只运行合成图像、模拟检测和模拟驱动，
+观测速度话题 `/vision/cmd_vel` 不连接既有底盘。相机断开、检测中断或推理超时触发停车。
+实体驱动需要阶段 1–9 对应验收证据、急停可用、轮子架空、低速和现场监护；未完成时继续 mock。

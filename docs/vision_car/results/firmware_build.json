@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "platform": "espressif32@6.9.0",
+  "board": "esp32dev",
+  "framework": "Arduino-ESP32 2.0.17",
+  "uploaded": false,
+  "hardware_used": false,
+  "firmware_bytes": 303728,
+  "sha256": "96e2337eb9ae4fb2a0fad31693022144b89568daf8599a73f613762169e24fcf",
+  "ram_bytes": 21704,
+  "flash_bytes": 303361
+}

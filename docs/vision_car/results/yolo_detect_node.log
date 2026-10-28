@@ -1,0 +1,25 @@
+[WARN] [1793178052.237521877] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1793178052.237591881] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+[ERROR] [1793178053.185870851] [yolo_detect_node]: YOLO 加载/推理超时：终止子进程，丢弃旧结果
+[ERROR] [1793178055.390358088] [yolo_detect_node]: YOLO 加载/推理超时：终止子进程，丢弃旧结果
+Traceback (most recent call last):
+  File "/home/zhouweihua/Downloads/ros2/install/vision_car/lib/vision_car/yolo_detect_node", line 33, in <module>
+    sys.exit(load_entry_point('vision-car', 'console_scripts', 'yolo_detect_node')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhouweihua/Downloads/ros2/build/vision_car/vision_car/yolo_detect_node.py", line 181, in main
+    run(YoloDetectNode)
+  File "/home/zhouweihua/Downloads/ros2/build/vision_car/vision_car/common.py", line 16, in run
+    rclpy.spin(node)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+    executor.spin_once()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+    raise ExternalShutdownException()
+rclpy.executors.ExternalShutdownException

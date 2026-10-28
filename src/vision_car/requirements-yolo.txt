@@ -1,0 +1,11 @@
+# Ubuntu 22.04 / Python 3.10 / ROS 2 Humble；先安装 apt OpenCV，再创建 --system-site-packages venv。
+# numpy<2 避免 Humble cv_bridge 的 NumPy ABI 冲突。Torch/torchvision 必须使用匹配的二进制组合。
+numpy==1.26.4
+ultralytics==8.3.40
+torch==2.5.1
+torchvision==0.20.1
+opencv-python==4.10.0.84
+pyserial==3.5
+PyYAML==6.0.2
+pytest==8.3.3
+setuptools==69.5.1

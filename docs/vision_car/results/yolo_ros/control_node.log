@@ -1,0 +1,42 @@
+[WARN] [1793178479.851687281] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1793178479.851867611] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+[INFO] [1793178479.994480664] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178485.831124650] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178485.879879485] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178486.380074311] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178486.781692243] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178486.830007642] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178487.179901954] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178487.530018522] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178487.579432416] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178487.979882656] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178488.931379475] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178488.979687444] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178490.432603095] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178492.829733059] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178492.880605047] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178493.681168339] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178494.780853170] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178494.829877632] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178496.532059195] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+Traceback (most recent call last):
+  File "/tmp/vision-install-yolo/vision_car/lib/vision_car/control_node", line 33, in <module>
+    sys.exit(load_entry_point('vision-car', 'console_scripts', 'control_node')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/vision-build-yolo/vision_car/vision_car/control_node.py", line 132, in main
+    run(ControlNode)
+  File "/tmp/vision-build-yolo/vision_car/vision_car/common.py", line 16, in run
+    rclpy.spin(node)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+    executor.spin_once()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+    raise ExternalShutdownException()
+rclpy.executors.ExternalShutdownException

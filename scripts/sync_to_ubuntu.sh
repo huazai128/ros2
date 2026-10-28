@@ -39,6 +39,9 @@ rsync -avz --human-readable \
   --exclude='build/' \
   --exclude='install/' \
   --exclude='log/' \
+  --exclude='.venv-vision/' \
+  --exclude='.pio/' \
+  --exclude='.pytest_cache/' \
   --exclude='__pycache__/' \
   --exclude='*.pyc' \
   "${DELETE_ARGS[@]}" \

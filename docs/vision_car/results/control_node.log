@@ -1,0 +1,49 @@
+[WARN] [1793178022.892030637] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1793178022.892101808] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+[INFO] [1793178023.023476381] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178023.910884806] [control_node]: {"state": "SCAN", "linear": 0.0, "angular": 0.0, "pan": 1.275835774998768, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178026.310677597] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 59.98009219999858, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178026.360358174] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 58.7127907499962, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178027.158965330] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 39.99053902499554, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178027.258956205] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 39.99053902499554, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178027.309075359] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": 0.35, "pan": 38.73914362499136, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178030.259010030] [control_node]: {"state": "APPROACH", "linear": 0.1, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178034.260967379] [control_node]: {"state": "HOLD", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178035.059593311] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178035.859715067] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178035.909348913] [control_node]: {"state": "HOLD", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178037.259861510] [control_node]: {"state": "LOST", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178037.759143755] [control_node]: {"state": "SCAN", "linear": 0.0, "angular": 0.0, "pan": 1.2383775749981396, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178038.359034021] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 14.985676574997342, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178038.909514260] [control_node]: {"state": "SCAN", "linear": 0.0, "angular": 0.0, "pan": 16.239250099999936, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178039.058937942] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 18.739448799999536, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178039.909182620] [control_node]: {"state": "SCAN", "linear": 0.0, "angular": 0.0, "pan": 19.977777750000314, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178041.859840456] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 53.764594499998566, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178041.909171739] [control_node]: {"state": "SCAN", "linear": 0.0, "angular": 0.0, "pan": 52.52244622500143, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178041.961670730] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 52.52244622500143, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178045.010272601] [control_node]: {"state": "SCAN", "linear": 0.0, "angular": 0.0, "pan": 51.271589575001144, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178047.961713115] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": -21.249638150001147, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178048.509288909] [control_node]: {"state": "ACQUIRE", "linear": 0.0, "angular": 0.0, "pan": -21.249638150001147, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178048.559043014] [control_node]: {"state": "ALIGN", "linear": 0.0, "angular": -0.35, "pan": -20.001952975004542, "driver": "mock", "hardware_enabled": false}
+[INFO] [1793178049.660295725] [control_node]: {"state": "FAULT", "linear": 0.0, "angular": 0.0, "pan": 0.0, "driver": "mock", "hardware_enabled": false}
+Traceback (most recent call last):
+  File "/home/zhouweihua/Downloads/ros2/install/vision_car/lib/vision_car/control_node", line 33, in <module>
+    sys.exit(load_entry_point('vision-car', 'console_scripts', 'control_node')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhouweihua/Downloads/ros2/build/vision_car/vision_car/control_node.py", line 130, in main
+    run(ControlNode)
+  File "/home/zhouweihua/Downloads/ros2/build/vision_car/vision_car/common.py", line 16, in run
+    rclpy.spin(node)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+    executor.spin_once()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+    raise ExternalShutdownException()
+rclpy.executors.ExternalShutdownException
