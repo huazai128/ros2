@@ -39,6 +39,10 @@ class HealthCheck(Node):
         便于不同传感器配置复用同一 bringup 流程。其余阶段要求每项
         话题和消息类型都匹配，防止同名话题发布了错误类型。
         """
+        # 新诊断节点刚加入 DDS 图谱时，远端发布者的发现信息尚未必然到达。
+        # 等待一个很短、只读的发现窗口，避免 Gazebo/桥接刚启动时误报缺失。
+        for _ in range(4):
+            rclpy.spin_once(self, timeout_sec=0.5)
         graph = dict(self.get_topic_names_and_types())
         expected = STAGES[self.stage]
         failed = []
