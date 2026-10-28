@@ -19,20 +19,23 @@ def generate_launch_description():
         [FindPackageShare('ros_gz_sim'), 'launch', 'gz_sim.launch.py'])
     return LaunchDescription([
         DeclareLaunchArgument('world', default_value=default_world),
+        DeclareLaunchArgument('render_engine', default_value='ogre2',
+                              description='渲染后端；虚拟机兼容模式使用 ogre'),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(gazebo_launch),
-            launch_arguments={'gz_args': [LaunchConfiguration('world'), ' -r']}.items(),
+            launch_arguments={'gz_args': [LaunchConfiguration('world'),
+                ' -r --render-engine ', LaunchConfiguration('render_engine')]}.items(),
         ),
         Node(
             package='ros_gz_bridge', executable='parameter_bridge',
             name='gazebo_ros_bridge', output='screen',
             parameters=[{'use_sim_time': True}],
             arguments=[
-                '/clock@rosgraph_msgs/msg/Clock@gz.msgs.Clock',
-                '/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
-                '/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry',
-                '/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
-                '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+                '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
+                '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
+                '/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry',
+                '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
+                '/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             ],
         ),
         Node(

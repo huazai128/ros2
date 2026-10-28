@@ -17,6 +17,9 @@ Gazebo Harmonic 3D 仿真（小车、墙体、差速运动、雷达与相机）�
 ros2 launch car_bringup gazebo_sim.launch.py
 ```
 
+虚拟机若遇到 Ogre2 渲染崩溃，使用 `ros2 launch car_bringup gazebo_sim.launch.py render_engine:=ogre`；
+已执行的传感器和运动验证见 [Gazebo 模拟记录](docs/gazebo/README.md)。
+
 该入口使用仿真时间，并桥接 `/cmd_vel`、`/odom`、`/scan`、`/camera/image_raw`
 和 `/tf`。仿真不应被当作实体硬件的验收证据。
 

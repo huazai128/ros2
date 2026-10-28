@@ -1,0 +1,14 @@
+{
+  "counts": {
+    "image": 36,
+    "scan": 25,
+    "odom": 124,
+    "clock": 2332
+  },
+  "forward_displacement_m": 0.06389999999960923,
+  "domain": 42,
+  "hardware_used": false,
+  "motion": "simulated 0.10 m/s for 2 wall seconds, followed by zero command",
+  "passed": true,
+  "finite_scan_ranges": 184
+}

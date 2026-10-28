@@ -99,6 +99,24 @@ ROS 2 Jazzy 环境需先安装 `ros-jazzy-ros-gz`，然后启动：
 ros2 launch car_bringup gazebo_sim.launch.py
 ```
 
+在 Apple 虚拟机等 Ogre2/EGL 崩溃的环境，使用已验证的 Ogre 兼容渲染模式；在 Ubuntu 桌面终端运行：
+
+```bash
+source /opt/ros/jazzy/setup.bash
+source ~/ros2/install/setup.bash
+export ROS_DOMAIN_ID=42
+export ROS_LOCALHOST_ONLY=1
+export GZ_PARTITION=ros2_car_demo
+export QT_QPA_PLATFORM=xcb
+export LIBGL_ALWAYS_SOFTWARE=1
+ros2 launch car_bringup gazebo_sim.launch.py render_engine:=ogre
+```
+
+同一仿真使用的所有终端须设置相同的 ROS_DOMAIN_ID 和 ROS_LOCALHOST_ONLY；GZ_PARTITION 用于隔离 Gazebo transport。
+模型已补充传感器固定关节、前后低摩擦支撑点和 GPU lidar。桥接明确设为速度 ROS→Gazebo、传感器/时钟/里程计/TF Gazebo→ROS，避免双向时钟反馈。
+当前是固定相机与差速底盘场景，尚未连接旋转云台和视觉自动跟踪闭环，不要同时启动发布同名相机话题的合成 camera_node。
+本次运行与验收说明见 [Gazebo 模拟记录](gazebo/README.md)。
+
 它会打开 Gazebo 窗口，加载带墙体的场景和差速小车，并桥接 `/scan`、
 `/camera/image_raw`、`/odom`、`/tf` 与 `/cmd_vel`。这是仿真验收，不是实体车验收。
 在另一终端用下列命令验证传感器；看到稳定频率才算本阶段仿真接口通过：
