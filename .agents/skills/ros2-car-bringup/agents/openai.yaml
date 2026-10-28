@@ -1,0 +1,4 @@
+interface:
+  display_name: ROS 2 小车搭建规范
+  short_description: 分阶段上车、验收和标准化输出
+  default_prompt: 按项目小车规范完成此任务，并明确每个阶段的用法、验收与未验证项。

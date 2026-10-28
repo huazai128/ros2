@@ -1,0 +1,18 @@
+# Replace these values with the names published by your hardware drivers.
+# Keep base_frame -> odom and base_frame -> laser_frame/camera_frame connected in TF.
+robot:
+  base_frame: base_link
+  odom_frame: odom
+  map_frame: map
+  laser_frame: laser
+  camera_frame: camera_link
+topics:
+  cmd_vel: /cmd_vel
+  odom: /odom
+  imu: /imu/data
+  scan: /scan
+  camera: /camera/image_raw
+limits:
+  # Start with these conservative limits; tune only after wheel tests pass.
+  max_linear_x: 0.15
+  max_angular_z: 0.50
