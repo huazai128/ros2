@@ -40,6 +40,7 @@ vision:
     inference_timeout: 2.0
     startup_timeout: 60.0
     image_timeout: 1.0
+    annotated_hz: 2.0  # 带框预览限频；0 禁用，无订阅者时跳过绘制
   control:
     scan_min: -60.0
     scan_max: 60.0

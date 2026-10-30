@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "ROS 2 视觉小车：系统与硬件调用架构",
+    "locale": "zh-CN",
+    "output": ".archify/architecture-vision-hardware-20261030-114423/ros2-vision-hardware-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/huazai128/ros2.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "6e92f49f77d03e8f62761dec14be5c5755a0cec1"
+    }
+  },
+  "components": [
+    {
+      "id": "robot-config",
+      "type": "database",
+      "label": "robot.yaml",
+      "sublabel": "话题、限速与硬件参数",
+      "pos": [40, 280],
+      "size": [150, 68],
+      "sources": [{"path": "src/car_bringup/config/robot.yaml", "line": 1, "end_line": 75, "label": "统一配置"}]
+    },
+    {
+      "id": "vision-launch",
+      "type": "backend",
+      "label": "vision_car.launch.py",
+      "sublabel": "读取配置并显式锁止硬件",
+      "pos": [250, 280],
+      "size": [160, 68],
+      "sources": [{"path": "src/vision_car/launch/vision_car.launch.py", "line": 11, "end_line": 38, "label": "配置与节点创建"}]
+    },
+    {
+      "id": "usb-camera",
+      "type": "external",
+      "label": "USB 摄像头",
+      "sublabel": "/dev/video0 或稳定 by-id 路径",
+      "pos": [40, 70],
+      "size": [155, 68],
+      "sources": [{"path": "src/vision_car/vision_car/camera_node.py", "line": 14, "end_line": 35, "label": "V4L2 采集"}]
+    },
+    {
+      "id": "camera-node",
+      "type": "backend",
+      "label": "camera_node",
+      "sublabel": "发布 /camera/image_raw",
+      "pos": [680, 70],
+      "size": [155, 68],
+      "sources": [{"path": "src/vision_car/vision_car/camera_node.py", "line": 38, "end_line": 95, "label": "图像发布"}]
+    },
+    {
+      "id": "yolo-node",
+      "type": "backend",
+      "label": "yolo_detect_node",
+      "sublabel": "YOLOv8 / mock 推理",
+      "pos": [900, 70],
+      "size": [155, 68],
+      "sources": [{"path": "src/vision_car/vision_car/yolo_detect_node.py", "line": 54, "end_line": 78, "label": "订阅与结果输出"}, {"path": "src/vision_car/vision_car/yolo_detect_node.py", "line": 102, "end_line": 155, "label": "超时与结果发布"}]
+    },
+    {
+      "id": "control-node",
+      "type": "security",
+      "label": "control_node",
+      "sublabel": "安全状态机与速度限幅",
+      "pos": [900, 280],
+      "size": [155, 68],
+      "sources": [{"path": "src/vision_car/vision_car/control_node.py", "line": 15, "end_line": 53, "label": "硬件锁止与后端选择"}, {"path": "src/vision_car/vision_car/control_node.py", "line": 83, "end_line": 127, "label": "控制输出与故障停车"}]
+    },
+    {
+      "id": "serial-driver",
+      "type": "backend",
+      "label": "SerialDriver",
+      "sublabel": "串口 ACK 健康监测",
+      "pos": [1120, 210],
+      "size": [150, 68],
+      "sources": [{"path": "src/vision_car/vision_car/drivers.py", "line": 17, "end_line": 63, "label": "串口锁止协议"}]
+    },
+    {
+      "id": "linux-driver",
+      "type": "backend",
+      "label": "LinuxDriver",
+      "sublabel": "GPIO 方向与 PWM 输出",
+      "pos": [1120, 380],
+      "size": [150, 68],
+      "sources": [{"path": "src/vision_car/vision_car/drivers.py", "line": 93, "end_line": 148, "label": "直连硬件执行"}]
+    },
+    {
+      "id": "esp32",
+      "type": "external",
+      "label": "ESP32 固件",
+      "sublabel": "命令校验、ACK 与 300ms 看门狗",
+      "pos": [1300, 210],
+      "size": [175, 68],
+      "sources": [{"path": "firmware/esp32_vision_car/esp32_vision_car.ino", "line": 40, "end_line": 63, "label": "串口命令处理"}, {"path": "firmware/esp32_vision_car/esp32_vision_car.ino", "line": 74, "end_line": 87, "label": "超时停车"}]
+    },
+    {
+      "id": "actuators",
+      "type": "external",
+      "label": "L298N、左右电机与云台舵机",
+      "sublabel": "实体执行机构（需急停与低速验收）",
+      "pos": [1500, 295],
+      "size": [195, 68],
+      "sources": [{"path": "firmware/esp32_vision_car/esp32_vision_car.ino", "line": 10, "end_line": 37, "label": "PWM 与执行器输出"}]
+    }
+  ],
+  "boundaries": [
+    {"kind": "region", "label": "ROS 2 主机：vision_car 运行时", "wraps": ["vision-launch", "camera-node", "yolo-node", "control-node", "serial-driver", "linux-driver"]},
+    {"kind": "security-group", "label": "真实硬件仅在 hardware_enabled=true 且非 mock 后端时开放", "wraps": ["control-node", "serial-driver", "linux-driver"]}
+  ],
+  "connections": [
+    {"id": "config-launch", "from": "robot-config", "to": "vision-launch", "label": "加载参数与限速", "variant": "security"},
+    {"id": "launch-camera", "from": "vision-launch", "to": "camera-node", "label": "启动参数"},
+    {"id": "launch-yolo", "from": "vision-launch", "to": "yolo-node", "label": "启动参数"},
+    {"id": "launch-control", "from": "vision-launch", "to": "control-node", "label": "启动参数"},
+    {"id": "camera-input", "from": "usb-camera", "to": "camera-node", "label": "V4L2 帧"},
+    {"id": "image-topic", "from": "camera-node", "to": "yolo-node", "label": "/camera/image_raw", "variant": "emphasis"},
+    {"id": "bbox-topic", "from": "yolo-node", "to": "control-node", "label": "/vision/bbox JSON", "variant": "emphasis"},
+    {"id": "serial-output", "from": "control-node", "to": "serial-driver", "label": "线速度、角速度、云台角", "variant": "security"},
+    {"id": "linux-output", "from": "control-node", "to": "linux-driver", "label": "线速度、角速度、云台角", "variant": "security"},
+    {"id": "serial-protocol", "from": "serial-driver", "to": "esp32", "label": "V seq v w pan / ACK", "variant": "security"},
+    {"id": "esp32-actuators", "from": "esp32", "to": "actuators", "label": "GPIO + PWM"},
+    {"id": "linux-actuators", "from": "linux-driver", "to": "actuators", "label": "GPIO + PWM", "variant": "security"}
+  ],
+  "cards": [
+    {"dot": "emerald", "title": "ROS 数据路径", "items": ["图像经 /camera/image_raw 进入推理，检测结果经 /vision/bbox 进入控制节点。", "控制节点还发布隔离的 /vision/cmd_vel，图中重点展示其直接驱动后端。"]},
+    {"dot": "rose", "title": "安全边界", "items": ["launch 与控制节点拒绝未显式使能的实体硬件，模拟图像或模拟推理不能驱动实体后端。", "串口后端需要 ACK；ESP32 在 300ms 无命令时停车；Linux 直连要求外部看门狗确认。"]},
+    {"dot": "amber", "title": "现实硬件状态", "items": ["robot.yaml 中的相机、串口、GPIO/PWM 均是需现场替换或校准的参数。", "本图描述源码中的设计调用关系，不构成真实小车已验收或已上车的证据。"]}
+  ]
+}

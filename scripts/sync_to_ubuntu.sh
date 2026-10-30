@@ -40,6 +40,7 @@ rsync -avz --human-readable \
   --exclude='install/' \
   --exclude='log/' \
   --exclude='.venv-vision/' \
+  --exclude='.venv-opencv/' \
   --exclude='.pio/' \
   --exclude='.pytest_cache/' \
   --exclude='__pycache__/' \

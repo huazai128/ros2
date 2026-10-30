@@ -201,6 +201,7 @@ python scripts/test_vision_yolo_ros.py --model ~/vision-assets/yolov8n.pt \
 | inference_timeout / startup_timeout | 2 / 60 | 推理/模型加载超时（秒） |
 | confidence / target_class | 0.5 / person | YOLO 筛选，空类别表示全部 |
 | capture_timeout | 2 | 相机读超时后重建采集进程（秒） |
+| annotated_hz | 2 | 带框图最大发布频率；0 禁用，无订阅者时跳过绘制 |
 
 bbox 为 `std_msgs/String` 内的 JSON，避免另建自定义消息编译包。成功格式：
 
@@ -209,6 +210,48 @@ bbox 为 `std_msgs/String` 内的 JSON，避免另建自定义消息编译包。
 ```
 
 健康但无目标：`ok:true, boxes:[]`；故障：`{"ok":false,"error":"原因","boxes":[]}`。图像时间戳保留到 bbox 和带框图。控制节点拒绝非有限数值、越界框、尺寸错误、过期/未来/重复/乱序包。真实 USB 与控制节点使用系统时钟，不配置 `use_sim_time`；分机运行须同步系统时钟。
+
+### 低延迟调度与观测
+
+检测工作进程通过单向管道通知接收线程，再由 ROS guard condition 唤醒执行器。
+新图像到达且模型空闲时立即提交；推理完成后立即发布检测包并提交缓存的最新帧。
+20 ms 定时器保留用于启动、推理和相机中断的看门狗检查，不再是结果接收的唯一入口。
+接收线程不修改控制或检测状态；旧工作进程退出后清空缓存，避免恢复时复用旧结果。
+
+相机、检测图像 QoS 使用 BEST_EFFORT / KEEP_LAST / depth=1。
+采集队列满时尝试移除旧帧并写入新帧；multiprocessing feeder 暂不可读时最多等 5 ms，随后放弃本帧，避免阻塞采集。
+真实相机的发布检查周期至多 10 ms，模拟相机仍按配置 fps 生成。
+这会主动跳过无法及时处理的帧；相机驱动是否接受单缓冲设置仍取决于实际设备。
+检测和控制消息保持 RELIABLE，但待处理深度改为 1。
+
+带框图由独立定时回调限频处理，检测回调不再逐框记录日志或绘图。
+预览仍与检测节点共享单线程执行器，绘图时仍会短暂占用执行器；严格延迟场景应设置
+`vision.detector.annotated_hz: 0.0`。检测模型、输入尺寸、控制频率和安全超时值未改动。
+
+成功检测包新增三个诊断字段，现有 boxes 接口保持兼容：
+
+| 字段 | 含义 |
+|---|---|
+| inference_ms | 工作进程内模型调用和框提取耗时；不含模型加载 |
+| job_ms | 主节点提交任务到消费结果的耗时，包含进程通信与调度 |
+| result_age_ms | 结果发布时距原始图像时间戳的年龄 |
+
+`result_age_ms` 不包含控制器等待下一个 tick 的时间，也不是曝光到执行器动作的全链路延迟。
+`/vision/state` 另提供 `detection_age_ms`（当前控制 tick 使用的图像年龄，无包时为 null）
+和 `tick_interval_ms`（相邻控制回调的实际间隔），用于观察结果新鲜度和控制掉频。
+相机时间戳在 VideoCapture.read 返回后记录；真实 USB 缓冲、曝光和系统时钟偏差仍需现场测量。
+当前仍使用 Python 及进程队列传输输入图像，没有宣称零拷贝或 TensorRT/C++ 加速。
+
+在 Mac 可运行不依赖 ROS 的调度回归测试：
+
+```bash
+cd /Users/JOYY/Downloads/AI/ros2
+PYTHONPATH=src/vision_car python3 -m unittest discover -s src/vision_car/test -p test_pipeline.py -v
+```
+
+通过条件：全部测试 OK，包括队列旧帧替换、管道中断、事件通知、过期/未来帧拒绝和预览关闭。
+在已配置依赖的 Ubuntu 上重新构建后，用第 3 节视频回放加 mock 执行器验收，再比较相同视频的
+`result_age_ms` P95/P99；本次优化不能直接作为实体硬件验收证据。
 
 ## 5. 接线与 PWM/L298N
 

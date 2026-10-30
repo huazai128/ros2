@@ -19,6 +19,10 @@ source install/setup.bash
 
 修改 `src/car_bringup/config/robot.yaml` 中的话题和 frame，使其与实际驱动一致，然后重新编译。下文 `底盘驱动启动命令`、`雷达驱动启动命令` 是必须替换为设备厂商提供的真实命令的位置。需要调 Nav2 参数时，以发行版自带的完整 `nav2_params.yaml` 为基础复制一份，再覆盖 `base_link`、`odom`、`map` 与 `/odom` 设置，并通过 `params_file:=<路径>` 传入。
 
+视觉链路使用最新帧调度和事件通知；`vision.detector.annotated_hz` 默认 2 Hz，设为 0.0 可关闭预览。
+修改后仍须重编译，并先用视频回放和 mock 执行器验收。
+延迟字段与测试方法见 [视觉链路调度说明](vision_car/README.md#低延迟调度与观测)；控制限速和超时停车规则继续生效。
+
 ## 1–2. 供电、电池与 Ubuntu
 
 1. 断电检查线束、急停、保险丝；首次让驱动轮离地。

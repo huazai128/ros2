@@ -58,3 +58,7 @@ ros2 launch vision_car vision_car.launch.py
 ```
 
 该模拟可验证控制状态与故障停车，不是物理仿真或真实 YOLO 检测准确率验收。实体驱动默认锁止。
+
+如只想在 Mac 本机调用摄像头、手动框选并跟踪一个物品，可使用独立的
+[macOS OpenCV 物品跟踪 Demo](docs/vision_car/MAC_OPENCV_TRACKER.md)；它不依赖 ROS 2，
+也不会向小车发送任何控制命令。

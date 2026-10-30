@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/JOYY/Downloads/AI/ros2/.archify/architecture-vision-hardware-20261030-114423/candidate.json",
+    "sha256": "13b9834a9e7ee7a10659c23afcb28fa82702aef18fc83ccd9c4408eb73e69ecf",
+    "bytes": 6819
+  },
+  "artifact": {
+    "path": "/Users/JOYY/Downloads/AI/ros2/.archify/architecture-vision-hardware-20261030-114423/ros2-vision-hardware-architecture.html",
+    "sha256": "5e80fe4b0df8043eb0cd040fcb168421bab98f6ca1b9a7a6b8e886b1ef2566e4",
+    "bytes": 857340
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "fail"
+  },
+  "failedStage": "browser-check",
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/Users/JOYY/Downloads/AI/ros2/.archify/architecture-vision-hardware-20261030-114423/ros2-vision-hardware-architecture.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v24.15.0, libuv 1.51.0, darwin; pid=44307, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/JOYY/Downloads/AI/ros2/.archify/architecture-vision-hardware-20261030-114423/ros2-vision-hardware-architecture.finalize.json",
+    "summaryReceipt": "/Users/JOYY/Downloads/AI/ros2/.archify/architecture-vision-hardware-20261030-114423/ros2-vision-hardware-architecture.finalize-summary.json",
+    "browserCheckReceipt": "/Users/JOYY/Downloads/AI/ros2/.archify/architecture-vision-hardware-20261030-114423/ros2-vision-hardware-architecture.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "durationMs": 9505,
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  }
+}
