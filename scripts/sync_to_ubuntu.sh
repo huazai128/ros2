@@ -41,6 +41,9 @@ rsync -avz --human-readable \
   --exclude='log/' \
   --exclude='.venv-vision/' \
   --exclude='.venv-opencv/' \
+  --exclude='.venv-yolo-mac/' \
+  --exclude='assets/*.pt' \
+  --exclude='demo-runs/' \
   --exclude='.pio/' \
   --exclude='.pytest_cache/' \
   --exclude='__pycache__/' \

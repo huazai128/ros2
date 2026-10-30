@@ -7,3 +7,7 @@ __pycache__/
 .venv-vision/
 .pio/
 .pytest_cache/
+.venv-opencv/
+.venv-yolo-mac/
+assets/*.pt
+demo-runs/

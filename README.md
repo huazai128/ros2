@@ -62,3 +62,6 @@ ros2 launch vision_car vision_car.launch.py
 如只想在 Mac 本机调用摄像头、手动框选并跟踪一个物品，可使用独立的
 [macOS OpenCV 物品跟踪 Demo](docs/vision_car/MAC_OPENCV_TRACKER.md)；它不依赖 ROS 2，
 也不会向小车发送任何控制命令。
+
+自动检测、多目标 ID、轨迹及未来位置预测见
+[Mac YOLO + ByteTrack + 卡尔曼 Demo](docs/vision_car/MAC_YOLO_TRACKER.md)。

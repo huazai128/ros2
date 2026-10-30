@@ -1,0 +1,7 @@
+# 独立 Mac Demo 环境，勿与 ROS cv_bridge 或其他 OpenCV wheel 混装。
+ultralytics==8.3.40
+torch==2.5.1
+torchvision==0.20.1
+numpy==1.26.4
+opencv-python==4.10.0.84
+lap==0.5.12

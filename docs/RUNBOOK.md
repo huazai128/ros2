@@ -1,5 +1,8 @@
 # 小车到手后的运行手册
 
+Mac 本机摄像头的独立视觉演示见 [YOLO + ByteTrack + 卡尔曼预测](vision_car/MAC_YOLO_TRACKER.md)，
+包含独立 Python 环境、摄像头授权、轨迹导出和视频验收方法。
+
 以下命令在**小车 Ubuntu**终端运行，除非特别写明“Mac”。每开一个新终端先执行：
 
 ```bash
